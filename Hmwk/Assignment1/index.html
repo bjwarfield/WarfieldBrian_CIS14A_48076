@@ -1,0 +1,39 @@
+<script type="text/javascript">
+	/*
+	Brian Warfield
+	CIS 14A JavaScript
+	2 September 2014
+	Purpose: Assignment 1.2 Test Drive pp. 31 
+	*/
+</script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="utf-8" />
+	<title>My First JavaScript</title>
+	
+</head>
+<body>
+	<script type="text/javascript">
+		var word = "bottles"; 
+		var count = 99; //How many bottles
+		while (count > 0) {
+			if (count == 1){	//fix the plural tense if only 1 bottle
+				word = "bottle";
+			}else{
+				word = "bottles";
+			}
+			console.log(count + " " + word + " of non-alcoholic beverages on the wall");//It's a joke, I don't care much for beer.
+			console.log(count + " " + word + " of non-alcoholic beverages,");
+			console.log("Take one down, pass it around,");
+			count = count - 1;//Literally take one
+			if (count > 0) {//check to see if end of the song had been reached
+				console.log(count + " " + word + " of non-alcoholic beverages on the wall.");
+			} else {
+				console.log("No more " + word + " of non-alcoholic beverages on the wall.");
+				break;//redundant loop exit after 0 bottles reached
+			}
+		}
+	</script>
+</body>
+</html>
