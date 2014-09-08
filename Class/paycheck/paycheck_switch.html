@@ -1,0 +1,43 @@
+<script type="text/javascript">
+	/*
+	Brian Warfield
+	CIS 12 JavaScript
+	08 September 2014
+	Purpose: Investigate Branching Constructs
+	*/
+</script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Pay Check</title>
+
+</head>
+<body>
+	<script type="text/javascript">
+		//Declare and initialize variables
+		var hours = Math.floor((Math.random() * 20) + 30);// hours worked in hrs
+		var payRate=Math.floor((Math.random() * 25) + 36)*0.25;//$'s per hour
+		var payRate = payRate.toFixed(2);//set payrate to dollars and cents decimal places
+		var ovt =40;//hour at which overtime starts
+		//outout the inputs
+		document.write("<h1>Hours worked = "+hours+"</h1>")
+		document.write("<h1>Pay Rate = $"+payRate+" per hour</h1>")
+		document.write("<h1>Overtime starts at "+ovt+" hours</h1>")
+		//determine Paycheck
+		switch(hours<=ovt){
+		case true:{
+			var payCheck = hours*payRate;break;
+		}
+		default:{
+			var ovtHours = hours-ovt;
+			document.write("<h1>Overtime hours = "+ovtHours+"</h1>")
+			var payCheck = (hours*payRate)+((ovtHours)*payRate);break;
+		}
+		};
+		payCheck=payCheck.toFixed(2);
+		document.write("<h1>Paycheck is $"+payCheck+"</h1>")
+	</script>
+
+</body>
+</html>
