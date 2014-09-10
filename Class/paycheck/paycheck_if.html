@@ -27,16 +27,10 @@
 		document.write("<h1>Pay Rate = $"+payRate+" per hour</h1>")
 		document.write("<h1>Overtime starts at "+ovt+" hours</h1>")
 		//determine Paycheck
-		switch(hours<=ovt){
-		case true:{//Straight time
-			payCheck = hours*payRate;break;
-		}
-		default:{//overtime
-			ovtHours = hours-ovt;
-			document.write("<h1>Overtime hours = "+ovtHours+"</h1>")
-			payCheck = (hours*payRate)+((ovtHours)*payRate);break;
-		}
-		};
+		if(hours<=ovt)payCheck = hours*payRate;
+		if(hours>ovt)ovtHours = hours-ovt;
+		if(hours>ovt)document.write("<h1>Overtime hours = "+ovtHours+"</h1>");
+		if(hours>ovt)payCheck = (hours*payRate)+((ovtHours)*payRate);
 		payCheck=payCheck.toFixed(2);
 		document.write("<h1>Paycheck is $"+payCheck+"</h1>")
 	</script>
