@@ -23,10 +23,10 @@ label input{
 	<form id="account">
 		<!-- Create Input Fields for Table --> 
 		Initial Balance in $: <label><input type="text" name="balance" value="100" size="5" onchange="getAccount()" ></label><br><br>
-		1st Interest Rate in %: <label><input type="text" name="intRate" value="5" size="5" onchange="getAccount()" ></label><br><br>
-		2nd Interest Rate in %: <label><input type="text" name="intRate" value="5" size="5" onchange="getAccount()" ></label><br><br>
+		1st Interest Rate in %: <label><input type="text" name="intRate1" value="5" size="5" onchange="getAccount()" ></label><br><br>
+		2nd Interest Rate in %: <label><input type="text" name="intRate2" value="10" size="5" onchange="getAccount()" ></label><br><br>
 		Annual Deposit: <label><input type="text" name="deposit" value="100" size="5" onchange="getAccount()" ></label><br><br>
-		Number of years:<label><input type="text" name="maxYears" value="100" size="5" onchange="getAccount()" ></label><br><br>
+		Number of years:<label><input type="text" name="maxYears" value="50" size="5" onchange="getAccount()" ></label><br><br>
 	</form> 
 	<p id="acctOutput"></p>
 	<table border="1">
@@ -54,21 +54,26 @@ label input{
 			intRate2 = Number(document.getElementById("account")[2].value);
 			deposit = Number(document.getElementById("account")[3].value);
 			maxYears = Number(document.getElementById("account")[4].value);
-			makeTable();
+			//Modify Table Headers to display Interest Rate
+			document.getElementById("col1").innerHTML = "Savings at "+intRate1+"% interest";
+			document.getElementById("col2").innerHTML = "Savings at "+intRate2+"% interest";
+			makeTable();//apply data to table
 		}
 		function makeTable(){
-			newRows = "";//Clear of old data
+			newRows = "";//Initialize var to clear out old data
 			for(var year=1;year<=maxYears;year++){
+				//calculate new balances with given interests rates
 				balance1+=deposit;
 				balance1 *= (1+(intRate1/100));
 				balance2+=deposit;
 				balance2 *= (1+(intRate2/100));
-				newRows += "<tr><td>"+year+"</td><td>$"+Intl.NumberFormat().format(balance1.toFixed(2))+"</td><td>$"+Intl.NumberFormat().format(balance2.toFixed(2))+"</td></tr>";
+				//collect data formatted to table
+				newRows += "<tr><td>"+year+"</td><td>"+Intl.NumberFormat("en-US",{ style: "currency", currency: "USD" }).format(balance1)+"</td><td>"+Intl.NumberFormat("en-US",{ style: "currency", currency: "USD" }).format(balance2)+"</td></tr>";
 			};
-			//document.getElementById("makeTable").innerHTML = newRows;
+			//output new data to table body
 			document.getElementById("tableData").innerHTML = newRows;
 		};
-		getAccount();
+		getAccount();//collect data and make table when page loads
 		
 	</script>
 </html>

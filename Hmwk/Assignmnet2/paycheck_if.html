@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<script type="text/javascript">
+		/*
+		Brian Warfield
+		CIS 12 JavaScript
+		08 September 2014
+		Purpose: Investigate Branching Constructs
+		*/
+	</script>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Pay Check</title>
+<style>
+label input{
+	position:absolute;
+	left:160px;
+}
+</style>
+	<script type="text/javascript">
+		//Declare and initialize variables
+		var hours;// hours worked in hrs
+		var payRate;//$'s per hour
+		var doubleTime;//hour at which double time starts
+		var tripleTime;//hour at which triple time starts
+		var payCheck;//Declare not initialize
+		var doubleTimeHours;//Declare not initialize
+		var tripleTimeHours;//Declare not initialize
+		var payChectOutput;//Text to be displayed
+		function calculateCheck() {
+			hours = Number(document.getElementById("timecard")[0].value);
+			payRate = Number(document.getElementById("timecard")[1].value);
+			doubleTime = Number(document.getElementById("timecard")[2].value);
+			tripleTime = Number(document.getElementById("timecard")[3].value);
+			payCheck = 0;//initialize value
+			doubleTimeHours = hours - doubleTime;
+			tripleTimeHours = hours - tripleTime;
+			//determine Paycheck
+			if (hours<=doubleTime){//straight time
+				payCheck = hours*payRate;
+				document.getElementById('payCheckOutput').innerHTML = "<h2>paycheck is $"+payCheck.toFixed(2)+"</h2><br />";
+			};
+			if (hours>doubleTime&&hours<=tripleTime){//double time but not triple time
+				payCheck = (hours*payRate)+(doubleTime*payRate);
+				document.getElementById('payCheckOutput').innerHTML = "<h2>DoubleTime Hours Worked = "+doubleTimeHours+"</h2><h2>paycheck is $"+payCheck.toFixed(2)+"</h2><br />";
+			};
+			if(hours>tripleTime){//triple time
+				payCheck =(hours*payRate)+(doubleTimeHours*payRate)+(tripleTimeHours*payRate);
+				document.getElementById('payCheckOutput').innerHTML = "<h2>TripleTime Hours Worked = "+tripleTimeHours+"</h2><h2>DoubleTime Hours Worked = "+doubleTimeHours+"</h2><h2>paycheck is $"+payCheck.toFixed(2)+"</h2><br />";
+			};
+			};//endFunction
+	</script>
+</head>
+<body>
+	<form id="timecard">
+		<!-- Create Input Fields for Table --> 
+		Hours Worked in hrs: <label><input type="text" name="hours" value="40" size="5" onchange="calculateCheck()" ></label><br><br>
+		Pay Rate in $: <label><input type="text" name="payRate" value="10" size="5" onchange="calculateCheck()" ></label><br><br>
+		Double Time start in hrs: <label><input type="text" name="doubleTime" value="20" size="5" onchange="calculateCheck()" ></label><br><br>
+		Triple Time start in hrs: <label><input type="text" name="tripleTime" value="40" size="5" onchange="calculateCheck()" ></label><br><br>
+	</form> 
+	<div id="payCheckOutput"></div>
+
+	<script type="text/javascript">calculateCheck();</script>
+	
+</body>
+</html>
