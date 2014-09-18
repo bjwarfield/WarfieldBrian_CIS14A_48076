@@ -37,15 +37,13 @@ label input{
 			//determine Paycheck
 			if (hours<=doubleTime){//straight time
 				payCheck = hours*payRate;//calculate pay
-				document.getElementById('payCheckOutput').innerHTML = "<h2>paycheck is $"+payCheck.toFixed(2)+"</h2><br />";//output to div
-			};
-			if (hours>doubleTime&&hours<=tripleTime){//double time but not triple time
+				document.getElementById('payCheckOutput').innerHTML = "<h2>Paycheck is $"+payCheck.toFixed(2)+"</h2><br />";//output to div
+			}else if(hours<=tripleTime){//double time but not triple time
 				payCheck = (hours*payRate)+(doubleTime*payRate);//calculate pay
-				document.getElementById('payCheckOutput').innerHTML = "<h2>DoubleTime Hours Worked = "+doubleTimeHours+"</h2><h2>paycheck is $"+payCheck.toFixed(2)+"</h2><br />";//output to div
-			};
-			if(hours>tripleTime){//triple time
+				document.getElementById('payCheckOutput').innerHTML = "<h2>DoubleTime Hours Worked = "+doubleTimeHours+"</h2><h2>Paycheck is $"+payCheck.toFixed(2)+"</h2><br />";//output to div
+			}else{//triple time
 				payCheck =(hours*payRate)+(doubleTimeHours*payRate)+(tripleTimeHours*payRate);//calculate pay
-				document.getElementById('payCheckOutput').innerHTML = "<h2>TripleTime Hours Worked = "+tripleTimeHours+"</h2><h2>DoubleTime Hours Worked = "+doubleTimeHours+"</h2><h2>paycheck is $"+payCheck.toFixed(2)+"</h2><br />";//output to div
+				document.getElementById('payCheckOutput').innerHTML = "<h2>TripleTime Hours Worked = "+tripleTimeHours+"</h2><h2>DoubleTime Hours Worked = "+doubleTimeHours+"</h2><h2>Paycheck is $"+payCheck.toFixed(2)+"</h2><br />";//output to div
 			};
 			};//endFunction
 	</script>
@@ -61,7 +59,8 @@ label input{
 	</form> 
 	<div id="payCheckOutput"></div>
 
-	<script type="text/javascript">calculateCheck();//run function on startup using default values</script>
+	<script type="text/javascript">calculateCheck();//run function on startup using default values
+	</script>
 	
 </body>
 </html>

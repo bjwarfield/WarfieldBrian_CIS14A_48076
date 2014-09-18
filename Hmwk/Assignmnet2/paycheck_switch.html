@@ -35,22 +35,27 @@ label input{
 			doubleTimeHours = hours - doubleTime;
 			tripleTimeHours = hours - tripleTime;
 			//determine Paycheck
-			if (hours<=doubleTime){//straight time
+			switch(true){
+			case (hours<=doubleTime):{//straight time
 				payCheck = hours*payRate;//calculate pay
-				document.getElementById('payCheckOutput').innerHTML = "<h2>paycheck is $"+payCheck.toFixed(2)+"</h2><br />";//output to div
-			};
-			if (hours>doubleTime&&hours<=tripleTime){//double time but not triple time
+				document.getElementById('payCheckOutput').innerHTML = "<h2>Paycheck is $"+payCheck.toFixed(2)+"</h2><br />";//output to div
+				break;
+			};//endCase
+			case (hours<=tripleTime):{//double time but not triple time
 				payCheck = (hours*payRate)+(doubleTime*payRate);//calculate pay
-				document.getElementById('payCheckOutput').innerHTML = "<h2>DoubleTime Hours Worked = "+doubleTimeHours+"</h2><h2>paycheck is $"+payCheck.toFixed(2)+"</h2><br />";//output to div
-			};
-			if(hours>tripleTime){//triple time
+				document.getElementById('payCheckOutput').innerHTML = "<h2>DoubleTime Hours Worked = "+doubleTimeHours+"</h2><h2>Paycheck is $"+payCheck.toFixed(2)+"</h2><br />";//output to div
+				break;
+			};//endCase
+			default:{//triple time
 				payCheck =(hours*payRate)+(doubleTimeHours*payRate)+(tripleTimeHours*payRate);//calculate pay
-				document.getElementById('payCheckOutput').innerHTML = "<h2>TripleTime Hours Worked = "+tripleTimeHours+"</h2><h2>DoubleTime Hours Worked = "+doubleTimeHours+"</h2><h2>paycheck is $"+payCheck.toFixed(2)+"</h2><br />";//output to div
-			};
+				document.getElementById('payCheckOutput').innerHTML = "<h2>TripleTime Hours Worked = "+tripleTimeHours+"</h2><h2>DoubleTime Hours Worked = "+doubleTimeHours+"</h2><h2>Paycheck is $"+payCheck.toFixed(2)+"</h2><br />";//output to div
+				break;
+			};//endDefault
+			};//endSwitch
 			};//endFunction
 	</script>
 </head>
-<body>
+<body onLoad="calculateCheck()"><!--run output function on StartUp using default values-->
 	<h2>Paycheck Calculator</h2>
 	<form id="timecard">
 		<!-- Create Input Fields for Table --> 
@@ -60,8 +65,6 @@ label input{
 		Triple Time start in hrs: <label><input type="text" name="tripleTime" value="40" size="5" onchange="calculateCheck()" ></label><br><br>
 	</form> 
 	<div id="payCheckOutput"></div>
-
-	<script type="text/javascript">calculateCheck();//run function on startup using default values</script>
 	
 </body>
 </html>
