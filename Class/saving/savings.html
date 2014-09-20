@@ -38,6 +38,7 @@
 		var deposit;//annual deposit
 		var maxYears;//Number of years to tabulate
 		var newRows = "";//Will contain new HTML with table data
+		var year =1;
 		function getAccount(){//retrieve Variable data from inputs in account form
 			balance = Number(document.getElementById("account")[0].value);
 			intRate = Number(document.getElementById("account")[1].value);
@@ -47,7 +48,7 @@
 		}
 		function makeTable(){
 			newRows = "";//Clear of old data
-			for(var year=1;year<=maxYears;year++){
+			for(year=1;year<=maxYears;year++){
 				balance+=deposit;
 				balance *= (1+(intRate/100));
 				newRows += "<tr><td>"+year+"</td><td>"+balance.toFixed(2)+"</td></tr>";
