@@ -1,0 +1,131 @@
+<script type="text/javascript">
+	/*
+	Brian Warfield
+	CIS 12 JavaScript
+	Date
+	Purpose
+	*/
+</script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Savings Account</title>
+<style>
+body {
+    width: 800px;
+    padding: 0px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#accountInput {
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+	position:relative;
+}
+#accountInput h1 {
+    text-align: center;
+}
+#account input{
+	width:80px;
+	padding: 0 6px;
+	position:absolute;
+	right: 0px
+}
+td, th {
+    text-align: center;
+	border: 1px solid #CCC;
+	padding: 1px 15px;
+}
+tbody tr:nth-child(odd){
+	background-color:#ddd;
+}
+table{
+	border-collapse: collapse;
+	width:100%;
+}
+</style>
+</head>
+<body>
+	<div id="accountInput">
+		<h1>Savings Table</h1>
+		<form id="account">
+			<!-- Create Input Fields for Table --> 
+			<label>Initial Balance in $:<input type="text" name="balance" value="100" onchange="getAccount();" ></label><br/>
+			<label>1st Interest Rate in %:<input type="text" name="intRate1" value="5"  onchange="getAccount();" ></label><br/>
+			<label>2nd Interest Rate in %:<input type="text" name="intRate2" value="10" onchange="getAccount();" ></label><br/>
+			 <label>Annual Deposit:<input type="text" name="deposit" value="100"  onchange="getAccount();" ></label><br/>
+			<label>Number of years:<input type="text" name="maxYears" value="50" onchange="getAccount();" ></label><br/>
+		</form> 
+	</div>
+	<p id="acctOutput"></p>
+	<table><!--Table content targeted and modified by JS Code -->
+		<thead><tr>
+			<th id="tbYr">Year</th>
+			<th id="tbInt1">Interest 1</th>
+			<th id="tbBal1">Balance 1</th>
+			<th id="tbInt2">Interest 2</th>
+			<th id="tbBal2">Balance 2</th>
+			<th id="tbDep">Year End Deposit</th>
+		</tr></thead>
+		<tbody id="tableData"></tbody>
+	</table>
+
+	<script type="text/javascript">
+		//Initialize Variables
+		var balance1;//Starting balance in $
+		var balance2;//Second Starting balance in $
+		var intRate1;//Interest rate in %
+		var intRate2;//Second Interest rate in %
+		var deposit;//annual deposit
+		var year;//loop counter
+		var maxYears;//Number of years to tabulate
+		var newRows = "";//Will contain new HTML with table data
+		var years = [];//Column array of years 
+		var savings1 = [];//Column array of balance for intRate1
+		var int1 = [];//Column array of interest for intRate1
+		var savings2 = [];//Column array of balance for intRate2
+		var int2 = [];//Column array of interest for intRate2
+		function getAccount(){//retrieve Variable data from inputs in account form
+			balance1 = Number(document.getElementById("account")[0].value);
+			balance2 = Number(document.getElementById("account")[0].value);
+			intRate1 = Number(document.getElementById("account")[1].value);
+			intRate2 = Number(document.getElementById("account")[2].value);
+			deposit = Number(document.getElementById("account")[3].value);
+			maxYears = Number(document.getElementById("account")[4].value);
+			//Modify Table Headers to display Interest Rate
+			document.getElementById("tbInt1").innerHTML = "Interest earned at "+intRate1+"%";
+			document.getElementById("tbBal1").innerHTML = "Year End Balance at "+intRate1+"% interest";
+			document.getElementById("tbInt2").innerHTML = "Interest earned at "+intRate2+"%";
+			document.getElementById("tbBal2").innerHTML = "Year End Balance at "+intRate2+"% interest";
+			savings1[0] = balance1;//initial year 1 Balance
+			savings2[0] = balance2;
+			for(year=1;year<=maxYears;year++){
+				years[year]=year;
+				//Calculate Interest and truncate to 2 decimal places
+				int1[year]=Math.floor(savings1[year-1]*intRate1)/100; //Calculate Interest and truncate to 2 decimal places
+				savings1[year]=savings1[year-1]+int1[year]+deposit;
+				int2[year]=Math.floor(savings2[year-1]*intRate2)/100; 
+				savings2[year]=savings2[year-1]+int2[year]+deposit;
+			}
+			makeTable();//apply data to table
+		}
+		function toMoney (money){//takes a number a returns a string in USD format ie: "$1,000,001.50"
+			return Intl.NumberFormat("en-US",{ style: "currency", currency: "USD" }).format(money);
+		}
+		function makeTable(){
+			newRows = "";//Initialize var to clear out old data
+			for(year=1;year<=maxYears;year++){
+				//collect data formatted to table
+				newRows += "<tr><td>"+years[year]+"</td><td>"+toMoney(int1[year])+"</td><td>"+toMoney(savings1[year])+"</td><td>"+toMoney(int2[year])+"</td><td>"+toMoney(savings2[year])+"</td><td>"+toMoney(deposit)+"</td></tr>";
+			};
+			//output new data to table body
+			document.getElementById("tableData").innerHTML = newRows;
+		};
+		getAccount();//collect data and make table when page loads
+		
+	</script>
+</body>
+</html>
