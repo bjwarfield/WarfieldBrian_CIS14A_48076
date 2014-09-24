@@ -88,6 +88,21 @@ table{
 		var int1 = [];//Column array of interest for intRate1
 		var savings2 = [];//Column array of balance for intRate2
 		var int2 = [];//Column array of interest for intRate2
+		
+		var retTable = []; //2dim Array
+		var cols=6;
+		for (var col=0;col<cols;col++){
+			retTable[col]=[];
+		}
+		retTable[0][0]= 0;//years Column
+		retTable[1][0]= 0;//IntRate 1 column
+		retTable[2][0]= 0;//balance for intRate 1 column
+		retTable[3][0]= 0;//IntRate 2 column
+		retTable[4][0]= 0;//balance for intRate 2 column
+		retTable[5][0]= 0;//annual deposit
+
+		//populate the arrays
+
 		function getAccount(){//retrieve Variable data from inputs in account form
 			balance1 = Number(document.getElementById("account")[0].value);
 			balance2 = Number(document.getElementById("account")[0].value);
@@ -100,27 +115,33 @@ table{
 			document.getElementById("tbBal1").innerHTML = "Year End Balance at "+intRate1+"% interest";
 			document.getElementById("tbInt2").innerHTML = "Interest earned at "+intRate2+"%";
 			document.getElementById("tbBal2").innerHTML = "Year End Balance at "+intRate2+"% interest";
-			savings1[0] = balance1;//initial year 1 Balance
-			savings2[0] = balance2;
+			retTable[2][0] = balance1;//initial year 1 Balance
+			retTable[4][0] = balance2;
 			for(year=1;year<=maxYears;year++){
-				years[year]=year;
+				retTable[0][year]=year;
+				retTable[5][year]=deposit;
 				//Calculate Interest and truncate to 2 decimal places
-				int1[year]=Math.floor(savings1[year-1]*intRate1)/100; //Calculate Interest and truncate to 2 decimal places
-				savings1[year]=savings1[year-1]+int1[year]+deposit;
-				int2[year]=Math.floor(savings2[year-1]*intRate2)/100; 
-				savings2[year]=savings2[year-1]+int2[year]+deposit;
+				retTable[1][year]=Math.floor(retTable[2][year-1]*intRate1)/100; //Calculate Interest and truncate to 2 decimal places
+				retTable[2][year]=retTable[2][year-1]+retTable[1][year]+deposit;
+				retTable[3][year]=Math.floor(retTable[4][year-1]*intRate2)/100; 
+				retTable[4][year]=retTable[4][year-1]+retTable[3][year]+deposit;
 			}
 			makeTable();//apply data to table
 		}
-		function toMoney (money){//takes a number a returns a string in USD format ie: "$1,000,001.50"
+		function toMoney (money){//takes a number a returns a string in USD format ie: "$10,001.50"
 			return Intl.NumberFormat("en-US",{ style: "currency", currency: "USD" }).format(money);
 		}
 		function makeTable(){
 			newRows = "";//Initialize var to clear out old data
-			for(year=1;year<=maxYears;year++){
-				//collect data formatted to table
-				newRows += "<tr><td>"+years[year]+"</td><td>"+toMoney(int1[year])+"</td><td>"+toMoney(savings1[year])+"</td><td>"+toMoney(int2[year])+"</td><td>"+toMoney(savings2[year])+"</td><td>"+toMoney(deposit)+"</td></tr>";
-			};
+			var i;
+			var j;
+			for (i=1; i< retTable.length; i++){
+				newRows += "<tr>";
+				for (j=1; j< retTable[i].length; j++){
+					newRows += "<td>"+retTable[i][j]+"</td>";
+				}
+				newRows += "</tr>";
+			}
 			//output new data to table body
 			document.getElementById("tableData").innerHTML = newRows;
 		};
