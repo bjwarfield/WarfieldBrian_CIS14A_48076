@@ -133,12 +133,13 @@ table{
 		}
 		function makeTable(){
 			newRows = "";//Initialize var to clear out old data
-			var i;
-			var j;
-			for (i=1; i< retTable.length; i++){
+			//loop through columns for each element they contain
+			for (var i=1;i < retTable[0].length; i++){
 				newRows += "<tr>";
-				for (j=1; j< retTable[i].length; j++){
-					newRows += "<td>"+retTable[i][j]+"</td>";
+				//loop through rown for every column
+				for (var j = 0;j<retTable.length;j++){
+					if(j==0)newRows+= "<td>"+retTable[j][i]+"</td>";//if not year column
+					else newRows+= "<td>"+toMoney(retTable[j][i])+"</td>";//Format as money
 				}
 				newRows += "</tr>";
 			}
