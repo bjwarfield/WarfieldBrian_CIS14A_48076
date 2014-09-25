@@ -90,8 +90,8 @@ table{
 		var int2 = [];//Column array of interest for intRate2
 		
 		var retTable = []; //2dim Array
-		var cols=6;
-		for (var col=0;col<cols;col++){
+		//populate the arrays
+		for (var col=0;col<6;col++){//make 6 inner arrays for columns
 			retTable[col]=[];
 		}
 		retTable[0][0]= 0;//years Column
@@ -101,7 +101,7 @@ table{
 		retTable[4][0]= 0;//balance for intRate 2 column
 		retTable[5][0]= 0;//annual deposit
 
-		//populate the arrays
+		
 
 		function getAccount(){//retrieve Variable data from inputs in account form
 			balance1 = Number(document.getElementById("account")[0].value);
@@ -121,8 +121,9 @@ table{
 				retTable[0][year]=year;
 				retTable[5][year]=deposit;
 				//Calculate Interest and truncate to 2 decimal places
-				retTable[1][year]=Math.floor(retTable[2][year-1]*intRate1)/100; //Calculate Interest and truncate to 2 decimal places
+				retTable[1][year]=Math.floor(retTable[2][year-1]*intRate1)/100; 
 				retTable[2][year]=retTable[2][year-1]+retTable[1][year]+deposit;
+				//Calculate Interest and truncate to 2 decimal places
 				retTable[3][year]=Math.floor(retTable[4][year-1]*intRate2)/100; 
 				retTable[4][year]=retTable[4][year-1]+retTable[3][year]+deposit;
 			}
@@ -134,12 +135,12 @@ table{
 		function makeTable(){
 			newRows = "";//Initialize var to clear out old data
 			//loop through columns for each element they contain
-			for (var i=1;i < retTable[0].length; i++){
+			for (var rows=1;rows < retTable[0].length; rows++){
 				newRows += "<tr>";
 				//loop through rown for every column
-				for (var j = 0;j<retTable.length;j++){
-					if(j==0)newRows+= "<td>"+retTable[j][i]+"</td>";//if not year column
-					else newRows+= "<td>"+toMoney(retTable[j][i])+"</td>";//Format as money
+				for (var cols = 0;cols<retTable.length;cols++){
+					if(cols==0)newRows+= "<td>"+retTable[cols][rows]+"</td>";//if not year column
+					else newRows+= "<td>"+toMoney(retTable[cols][rows])+"</td>";//Format as money
 				}
 				newRows += "</tr>";
 			}
