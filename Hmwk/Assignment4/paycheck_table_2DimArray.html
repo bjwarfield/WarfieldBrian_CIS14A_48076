@@ -45,7 +45,6 @@ tbody tr:nth-child(odd){
 		//Declare and initialize variables
 		var hours;// hours worked in hrs
 		var payRate;//$'s per hour
-		var payRateOT;//overtime Payrate
 		var doubleTime;//hour at which double time starts
 		var tripleTime;//hour at which triple time starts
 		var payGross;//Declare not initialize
@@ -56,38 +55,61 @@ tbody tr:nth-child(odd){
 		var taxNet;
 		var hour; //incrementer
 		var tableRows = "";//Text to be inserted
+		var hourArray;
+		var payRateArray;
+		var payCheckArray=[];
+
 		function calculateCheck() {
+			//get values from form
 			hours = Number(document.getElementById("timecard")[0].value);
 			payRate = Number(document.getElementById("timecard")[1].value);
 			taxRate = Number(document.getElementById("timecard")[2].value);
 			doubleTime = Number(document.getElementById("timecard")[3].value);
 			tripleTime = Number(document.getElementById("timecard")[4].value);
-			payGross = 0;//initialize value
-			tableRows = "<table><thead><th>Hours</th><th>Pay Rate</th><th>Gross Pay</th><th>Taxes at "+taxRate+"%</th><th>Net Pay</th></thead>";//table header
+			//initialize arrays
+			payCheckArray[0] = [];//hours
+			payCheckArray[1] = [];//pay rate
+			payCheckArray[2] = [];//gross pay
+			payCheckArray[3] = [];//net tax
+			payCheckArray[4] = [];//net pay
+			//Initialize table data with header
+			tableRows = "<table><thead><th>Hours</th><th>Pay Rate</th><th>Gross Pay</th><th>Taxes at "+taxRate+"%</th><th>Net Pay</th></thead>";
 			tableRows += "<tbody>";//start Table Body
+
 			for (hour=0;hour<=hours;hour++){
 					//determine Paycheck
+					payCheckArray[0][hour]= hour;
+
 					doubleTimeHours = hour - doubleTime;
 					tripleTimeHours = hour - tripleTime;
 					if (hour<=doubleTime){//straight time
-						payGross = hour*payRate;//calculate gross pay
-						taxNet = payGross*taxRate/100;//calculate taxes
-						payNet = payGross - taxNet;//net pay
-						tableRows += "<tr><td>"+hour+"</td><td>"+toMoney(payRate)+"/hr</td><td>"+toMoney(payGross)+"</td><td>"+toMoney(taxNet)+"</td><td>"+toMoney(payNet)+"</td></tr>";//append new row
+						payCheckArray[2][hour] = hour*payRate;//calculate gross pay
+						payCheckArray[1][hour]=payRate;
+						payCheckArray[3][hour] = payCheckArray[2][hour]*taxRate/100;//calculate taxes
+						payCheckArray[4][hour] = payCheckArray[2][hour] - payCheckArray[3][hour];//net pay
 					}else if(hour<=tripleTime){//double time but not triple time
-						payGross = (hour*payRate)+(doubleTimeHours*payRate);//calculate pay
-						payRateOT = payRate*2;//overtime payrate
-						taxNet = payGross*taxRate/100;//calculate taxes
-						payNet = payGross - taxNet;//net pay
-						tableRows += "<tr><td>"+hour+"</td><td>"+toMoney(payRateOT)+"/hr</td><td>"+toMoney(payGross)+"</td><td>"+toMoney(taxNet)+"</td><td>"+toMoney(payNet)+"</td></tr>";//append new row
+						payCheckArray[2][hour] = (hour*payRate)+(doubleTimeHours*payRate);//calculate pay
+						payCheckArray[1][hour] = payRate*2;//overtime payrate
+						payCheckArray[3][hour] = payCheckArray[2][hour]*taxRate/100;//calculate taxes
+						payCheckArray[4][hour] = payCheckArray[2][hour] - payCheckArray[3][hour];//net pay
 					}else{//triple time
-						payGross =(hour*payRate)+(doubleTimeHours*payRate)+(tripleTimeHours*payRate);//calculate pay
-						payRateOT = payRate*3;//overtime payrate
-						taxNet = payGross*taxRate/100;//calculate taxes
-						payNet = payGross - taxNet;//net pay
-						tableRows += "<tr><td>"+hour+"</td><td>"+toMoney(payRateOT)+"/hr</td><td>"+toMoney(payGross)+"</td><td>"+toMoney(taxNet)+"</td><td>"+toMoney(payNet)+"</td></tr>";//append new row
+						payCheckArray[2][hour] =(hour*payRate)+(doubleTimeHours*payRate)+(tripleTimeHours*payRate);//calculate pay
+						payCheckArray[1][hour] = payRate*3;//overtime payrate
+						payCheckArray[3][hour] = payCheckArray[2][hour]*taxRate/100;//calculate taxes
+						payCheckArray[4][hour] = payCheckArray[2][hour] - payCheckArray[3][hour];//net pay
 					};//end If
 				};//end For Loop
+				for (row=0;row<payCheckArray[0].length;row++){
+					tableRows += "<tr>";
+					for(cols=0;cols<payCheckArray.length;cols++){
+						if(cols==0){
+							tableRows+= "<td>"+payCheckArray[cols][row]+"</td>";
+						}else{
+							tableRows+= "<td>"+toMoney(payCheckArray[cols][row])+"</td>";
+						}
+					}
+					tableRows += "</tr>";
+				}
 				tableRows += "</tbody>";//end table body
 				document.getElementById("payCheckOutput").innerHTML = tableRows;
 			};//endFunction
