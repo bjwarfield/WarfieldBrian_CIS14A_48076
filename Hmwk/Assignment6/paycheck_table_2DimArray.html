@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<script type="text/javascript">
+		/*
+		Brian Warfield
+		CIS 12 JavaScript
+		29 Sept 2014
+		Purpose: Homework 4, Paycheck Table with $_GET
+		*/
+	</script>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Pay Check</title>
+<style>
+
+body{
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
+form{
+	position: relative;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+label input{
+	position:absolute;
+	right: 10px;
+	width: 75px;
+}
+table{
+	width: 100%;
+	border-collapse: collapse;
+}
+th, td{
+	border:1px solid #ddd;
+	text-align: center;
+}
+tbody tr:nth-child(odd){
+	background-color: #EEE;
+}
+</style>
+	<script type="text/javascript" src="getForm.js"></script>
+	<script type="text/javascript">
+		//Declare and initialize variables
+		var hours;// hours worked in hrs
+		var payRate;//$'s per hour
+		var doubleTime;//hour at which double time starts
+		var tripleTime;//hour at which triple time starts
+		var payGross;//Declare not initialize
+		var payNet;
+		var doubleTimeHours;//Declare not initialize
+		var tripleTimeHours;//Declare not initialize
+		var taxRate;
+		var taxNet;
+		var hour; //incrementer
+		var tableRows = "";//Text to be inserted
+		var hourArray;
+		var payRateArray;
+		var payCheckArray=[];
+
+		function calculateCheck(input) {
+			//get values from form
+			hours = Number(input["hours"]);
+			payRate = Number(input["payRate"]);
+			taxRate = Number(input["taxRate"]);
+			doubleTime = Number(input["doubleTime"]);
+			tripleTime = Number(input["tripleTime"]);
+			//initialize arrays
+			payCheckArray[0] = [];//hours
+			payCheckArray[1] = [];//pay rate
+			payCheckArray[2] = [];//gross pay
+			payCheckArray[3] = [];//net tax
+			payCheckArray[4] = [];//net pay
+			//Initialize table data with header
+			tableRows = "<table><thead><th>Hours</th><th>Pay Rate</th><th>Gross Pay</th><th>Taxes at "+taxRate+"%</th><th>Net Pay</th></thead>";
+			tableRows += "<tbody>";//start Table Body
+
+			for (hour=0;hour<=hours;hour++){
+					//determine Paycheck
+					payCheckArray[0][hour]= hour;
+
+					doubleTimeHours = hour - doubleTime;
+					tripleTimeHours = hour - tripleTime;
+					if (hour<=doubleTime){//straight time
+						payCheckArray[2][hour] = hour*payRate;//calculate gross pay
+						payCheckArray[1][hour]=payRate;
+						payCheckArray[3][hour] = payCheckArray[2][hour]*taxRate/100;//calculate taxes
+						payCheckArray[4][hour] = payCheckArray[2][hour] - payCheckArray[3][hour];//net pay
+					}else if(hour<=tripleTime){//double time but not triple time
+						payCheckArray[2][hour] = (hour*payRate)+(doubleTimeHours*payRate);//calculate pay
+						payCheckArray[1][hour] = payRate*2;//overtime payrate
+						payCheckArray[3][hour] = payCheckArray[2][hour]*taxRate/100;//calculate taxes
+						payCheckArray[4][hour] = payCheckArray[2][hour] - payCheckArray[3][hour];//net pay
+					}else{//triple time
+						payCheckArray[2][hour] =(hour*payRate)+(doubleTimeHours*payRate)+(tripleTimeHours*payRate);//calculate pay
+						payCheckArray[1][hour] = payRate*3;//overtime payrate
+						payCheckArray[3][hour] = payCheckArray[2][hour]*taxRate/100;//calculate taxes
+						payCheckArray[4][hour] = payCheckArray[2][hour] - payCheckArray[3][hour];//net pay
+					};//end If
+				};//end For Loop
+				//append array data in table format
+				for (row=0;row<payCheckArray[0].length;row++){
+					tableRows += "<tr>";
+					for(cols=0;cols<payCheckArray.length;cols++){
+						if(cols==0){
+							tableRows+= "<td>"+payCheckArray[cols][row]+"</td>";
+						}else{
+							tableRows+= "<td>"+toMoney(payCheckArray[cols][row])+"</td>";
+						}//end if-else
+					}//end col loop
+					tableRows += "</tr>";
+				}//end row
+				tableRows += "</tbody>";//end table body
+				document.getElementById("payCheckOutput").innerHTML = tableRows;
+			};//endFunction
+			function toMoney (money){//takes a number a returns a string in USD format ie: "$10,001.50"
+			return Intl.NumberFormat("en-US",{ style: "currency", currency: "USD" }).format(money);
+			}//endFunction
+	</script>
+</head>
+<body>
+	<h2>Paycheck Calculator</h2>
+	<form method="get" action="" id="timecard">
+		<!-- Create Input Fields for Table --> 
+		Number of Hours to display: <label><input type="text" name="hours" ></label><br><br>
+		Pay Rate in $/hr: <label><input type="text" name="payRate" ></label><br><br>
+		Tax Rate in %: <label><input type="text" name="taxRate"  ></label><br><br>
+		Double Time start in hrs: <label><input type="text" name="doubleTime"  ></label><br><br>
+		Triple Time start in hrs: <label><input type="text" name="tripleTime" ></label><br><br>
+		<p align="center"><input type="submit" name="submit"></p>
+	</form> 
+	<div id="payCheckOutput"></div>
+	<script type="text/javascript">
+		var $_GET = getForm(document.location.href);
+		calculateCheck($_GET);
+	</script>
+
+</body>
+</html>
