@@ -1,3 +1,9 @@
+/*
+Brian Warfield
+CIS 12 JavaScript
+Date
+Purpose: Book Chapter 2
+*/
 var randomLoc = Math.floor(Math.random() * 5);
 var location1 = randomLoc;
 var location2 = location1 + 1;
@@ -26,5 +32,5 @@ while (isSunk == false) {
 	}
 }
 var stats = "You took " + guesses + " guesses to sink the battleship, " +
-            "which means your shooting accuracy was " + (3/guesses);
+	"which means your shooting accuracy was " + (3 / guesses);
 alert(stats);
