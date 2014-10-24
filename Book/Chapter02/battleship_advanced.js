@@ -88,60 +88,70 @@ function board(grid) { //object containing game properties
 	this.patrol_boat = new ship(2);
 }
 
+function gridCheck(gc, rr, rc, ss, iv) { //(gridCheck, rand_row, rand_col, shipSize,isVertical
+	var loop;
+	//		console.log("gridCheck: ",gc,rr,rc,ss,iv);
+	if (iv) { //vertical check
+		for (loop = 0; loop < ss; loop++) {
+			if (gc[rr][rc + loop] !== 0) {
+				return false; //return false if grid coord is occupied
+			}
+		}
+		return true; //return true if grid coords are clear
+	} else { //horizontal check
+		for (loop = 0; loop < ss; loop++) {
+			if (gc[rr + loop][rc] !== 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+} //end gridCheck function
+
 function setPos(setGrid) {
 
 	var rand_row;
 	var rand_col;
 	var set;
 	var verify;
-
-	function gridCheck(gc, rr, rc, ss, iv) { //(gridCheck, rand_row, rand_col, shipSize,isVertical
-		var loop;
-		if (iv) { //vertical check
-			for (loop = 0; loop < ss; loop++) {
-				if (gc[rr][rc + loop] !== 0) {
-					return false; //return false if grid coord is occupied
-				}
-			}
-			return true; //return true if grid coords are clear
-		} else { //horizontal check
-			for (loop = 0; loop < ss; loop++) {
-				if (gc[rr + loop][rc] !== 0) {
-					return false;
-				}
-			}
-			return true;
-		}
-
-	} //end gridCheck function
+	//	console.log("Setting Ships");
 
 	for (var property in setGrid) {
-		if (typeof setGrid[property] === Object) {
+		//		console.log("Looping");
+		if (property != "grid") {
 			do {
-				setGrid[property].isVertical=Math.random()>=0.5;
+				setGrid[property].isVertical = Math.random() >= 0.5;
+				//				console.log(property+".isVertical = "+setGrid[property].isVertical);
 				if (setGrid[property].isVertical) {
 					//generate random coodinates to place ship
 					rand_row = Math.floor(Math.random() * 10 + 1);
 					rand_col = Math.floor(Math.random() * (10 - setGrid[property].shipSize) + 1); //allow vertical space for shipSize
-					verify = gridCheck(setGrid, rand_row, rand_col, setGrid[property].shipSize, setGrid[property].isVertical); //check to see if coodinates are occupied
+					verify = gridCheck(setGrid.grid, rand_row, rand_col, setGrid[property].shipSize, setGrid[property].isVertical); //check to see if coodinates are occupied
 					if (verify) {
+						//						console.log("Verify Pass");
 						for (set = 0; set < setGrid[property].shipSize; set ++) {
-							setGrid[rand_row][rand_col + set] = 1;
+							setGrid.grid[rand_row][rand_col + set] = 1;
 							setGrid[property].position[set] = [rand_row, rand_col + set, false];
-							document.getElementsByClassName("row_" + rand_row + " col_" + rand_col + set)[0].innerHTML = "<span>1</span>";
+							document.getElementsByClassName("row_" + rand_row + " col_" + (rand_col + set))[0].innerHTML = "<span>" + property + "</span>";
 						}
+					} else {
+						//						console.log("Verify Fail");
 					}
 
 				} else {
 					rand_row = Math.floor(Math.random() * (10 - setGrid[property].shipSize) + 1); //allow horizontal space for shipSize
 					rand_col = Math.floor(Math.random() * 10 + 1);
-					verify = gridCheck(setGrid, rand_row, rand_col, setGrid[property].shipSize, setGrid[property].isVertical);
+					verify = gridCheck(setGrid.grid, rand_row, rand_col, setGrid[property].shipSize, setGrid[property].isVertical);
 					if (verify) {
+						//						console.log("Verify Pass");
 						for (set = 0; set < setGrid[property].shipSize; set ++) {
-							setGrid[rand_row + set][rand_col] = 1;
+							setGrid.grid[rand_row + set][rand_col] = 1;
 							setGrid[property].position[set] = [rand_row + set, rand_col, false];
-							document.getElementsByClassName("row_" + rand_row + set + " col_" + rand_col)[0].innerHTML = "<span>1</span>";
+							document.getElementsByClassName("row_" + (rand_row + set) + " col_" + rand_col)[0].innerHTML = "<span>" + property + "</span>";
 						}
+					} else {
+						//						console.log("Verify Fail");
 					}
 				}
 			} while (!verify);
@@ -152,8 +162,8 @@ function setPos(setGrid) {
 
 document.getElementById('reset').onclick = function() {
 	game = new board(reset()); //reset game
-
-	console.log(game);
+	game = setPos(game); //place ships on board
+	//	console.log(game);
 	for (var quadrant in document.getElementsByClassName('grid')) {
 		document.getElementsByClassName('grid')[quadrant].onclick = function() {
 			console.log(this.className);
