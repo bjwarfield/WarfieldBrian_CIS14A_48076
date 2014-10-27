@@ -1,3 +1,9 @@
+/*
+Brian Warfield
+CIS 14a JavaScript
+Date
+Purpose: Book Chapter 2
+*/
 //Battleship Advanced
 var game; //board object
 //reset game values and reset board

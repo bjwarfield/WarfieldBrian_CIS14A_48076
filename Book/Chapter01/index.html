@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<script type="text/javascript">	
+	/*
+	Brian Warfield
+	CIS 14A JavaScript
+	Date
+	Purpose: Book Chapter 1
+	*/
+	</script>
+	<meta charset="utf-8">
+	<title>My First JavaScript</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var word = "bottles"; 
+		var count = 99; //How many bottles
+		while (count > 0) {
+			if (count == 1){	//fix the plural tense if only 1 bottle
+				word = "bottle";
+			}else{
+				word = "bottles";
+			}
+			console.log(count + " " + word + " of non-alcoholic beverages on the wall");//It's a joke, I don't care much for beer.
+			console.log(count + " " + word + " of non-alcoholic beverages,");
+			console.log("Take one down, pass it around,");
+			count = count - 1;//Literally take one
+			if (count > 0) {//check to see if end of the song had been reached
+				console.log(count + " " + word + " of non-alcoholic beverages on the wall.");
+			} else {
+				console.log("No more " + word + " of non-alcoholic beverages on the wall.");
+				break;//redundant loop exit after 0 bottles reached
+			}
+		}
+	</script>
+</body>
+</html>
