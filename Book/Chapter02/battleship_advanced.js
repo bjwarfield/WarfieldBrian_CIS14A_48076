@@ -14,12 +14,12 @@ var reset = function() {
 		grid[row] = []; //make an inner array
 		draw_board += "<tr>"; //start a new table row and give it an ID#
 		for (var col = 0; col < 11; col++) { //for 11 columns in each row
-			grid[row][col] = 0; //initialize its array coordinates to 0 
+			grid[row][col] = 0; //initialize its array coordinates to 0; 0= Unknown 1= Hit, 2= Miss
 			if (row === 0) { //if its the first row
 				if (col === 0) { //if its the first column in the first row
-					draw_board += "<td class='row_" + String(row) + " col_" + String(col) + "'><span>&nbsp;</span></td>"; //give cell col ID# and blank cell value
+					draw_board += "<td class='row_" + String(row) + " col_" + String(col) + "'><span>&nbsp;</span></td>"; //give cell row/col class and blank cell value
 				} else { //if its the first row and not the first column
-					draw_board += "<td class='row_" + String(row) + " col_" + String(col) + "'><span>"; //give cell col ID# and...
+					draw_board += "<td class='row_" + String(row) + " col_" + String(col) + "'><span>"; //give cell row/col class and...
 					switch (col) {
 						case 1:
 							draw_board += "A";
@@ -74,7 +74,7 @@ var reset = function() {
 }; //end reset function
 
 function board(grid) { //object containing game properties
-	this.grid = grid; //map table array
+	this.grid = grid; //grid map table array
 	//	console.log(this.grid); //debugung
 
 	function ship(shipSize) {
@@ -124,14 +124,14 @@ function setPos(setGrid) {
 	var rand_col;
 	var set;
 	var verify;
-	//	console.log("Setting Ships");
+	//console.log("Setting Ships");
 
-	for (var property in setGrid) {
-		//		console.log("Looping");
-		if (property !== "grid" && property !== "shots") {
+	for (var property in setGrid) {//for every ship in the game
+		//console.log("Looping");
+		if (property !== "grid" && property !== "shots") {//exclude gridmap and shot counter properties
 			do {
-				setGrid[property].isVertical = Math.random() >= 0.5;
-				//				console.log(property+".isVertical = "+setGrid[property].isVertical);
+				setGrid[property].isVertical = Math.random() >= 0.5;//randomly orient ship
+				//console.log(property+".isVertical = "+setGrid[property].isVertical);
 				if (setGrid[property].isVertical) {
 					//generate random coodinates to place ship
 					rand_row = Math.floor(Math.random() * 10 + 1);
@@ -140,9 +140,9 @@ function setPos(setGrid) {
 					if (verify) {
 						//console.log("Verify Pass");
 						for (set = 0; set < setGrid[property].shipSize; set ++) {
-							setGrid.grid[rand_row][rand_col + set] = 1;
-							setGrid[property].position[set] = [rand_row, rand_col + set, false];
-							document.getElementsByClassName("row_" + rand_row + " col_" + (rand_col + set))[0].innerHTML = "<span>" + property + "</span>";
+							setGrid.grid[rand_row][rand_col + set] = 1;//mark coordinates as occupied on gridmap
+							setGrid[property].position[set] = [rand_row, rand_col + set, false];//Set ship.position [x,y,isHit?]
+							document.getElementsByClassName("row_" + rand_row + " col_" + (rand_col + set))[0].innerHTML = "<span>" + property + "</span>";//set table contents with ship name (hidden by CSS)
 						}
 					} else {
 						//console.log("Verify Fail");
@@ -175,7 +175,7 @@ function fire(field, shot) { //confirm hit on guess
 	var grid_x;
 	var grid_y;
 
-	function convertCol(head) {
+	function convertCol(head) {//convert y coord to header letter value
 		switch (head) {
 			case "1":
 				return "A";
@@ -217,8 +217,8 @@ function fire(field, shot) { //confirm hit on guess
 	//loop through ship elements
 	for (var property in field) {
 		//		console.log(property);
-		if (property !== "grid" && property !== "shots") {
-			for (var hitCheck in field[property].position) {
+		if (property !== "grid" && property !== "shots") {//exclude gridmap and shot counter 
+			for (var hitCheck in field[property].position) {//check each ship.position
 				//console.log(field[property].position[hitCheck][0], field[property].position[hitCheck][1], field[property].position[hitCheck][2]);
 				if (field[property].position[hitCheck][0] === grid_x && field[property].position[hitCheck][1] === grid_y && field[property].position[hitCheck][2]) {
 					console.log("Already Hit " + property + " at row_" + grid_x + " and col_" + grid_y);
@@ -238,16 +238,17 @@ function fire(field, shot) { //confirm hit on guess
 				}
 			}
 			if (field.grid[grid_x][grid_y] === 2) {
-				console.log("Already missed at row_" + grid_x + " and col_" + grid_y);
+				//console.log("Already missed at row_" + grid_x + " and col_" + grid_y);
 			} else if (field.grid[grid_x][grid_y] === 0) {
 				field.shots[0]++; //increments shots taken
 				console.log("Missed at row_" + grid_x + " and col_" + grid_y);
 				toAlert("Shot " + field.shots[0] + ": Missed at " + grid_x + convertCol(grid_y));
-				document.getElementsByClassName("row_" + grid_x + " col_" + grid_y)[0].innerHTML = "<span>miss</span>";
-				document.getElementsByClassName("row_" + grid_x + " col_" + grid_y)[0].classList.add("miss");
-				field.grid[grid_x][grid_y] = 2;
+				document.getElementsByClassName("row_" + grid_x + " col_" + grid_y)[0].innerHTML = "<span>miss</span>";//change html table data to reflect grid status (hidden by css)
+				document.getElementsByClassName("row_" + grid_x + " col_" + grid_y)[0].classList.add("miss");//add miss class for css styling
+				field.grid[grid_x][grid_y] = 2;//set gridMap to miss value
 
 			}
+			//Check to see if ship is sunk
 			if (!field[property].isSunk) {
 				var sink = true;
 				for (var checkSunk in field[property].position) {
