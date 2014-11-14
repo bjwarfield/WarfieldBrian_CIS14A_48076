@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ZombieClicker</title>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<style>
+
+	div, header{
+		border: 1px solid grey;
+	}
+	header, .main_container{
+		display: table;
+		width: 960px;
+		position: relative;
+		text-align: center;
+		margin:auto;
+		padding: 0;
+	}
+	.upper_block{
+		display: table-row;
+	}
+	.left_block, .middle_block, .right_block{
+		width: 32%;
+		display: table-cell;
+		position: relative;
+	}
+	.clicker_block{
+		position: relative;
+		width: 100%;
+		border-collapse: collapse;
+		margin:0 auto;
+
+	}
+	.clicker_block > div{
+		height: 30px;
+	}
+	.clicker_block > div span{
+		vertical-align: middle;
+	}
+	.clicker_block button{
+		width: 100%;
+		height: 100%;
+	}
+	.action_buttons{
+		display: table;
+		width: 100%;
+		
+	}
+	.action_buttons div{
+		display: table-cell;
+		height: 60px;
+	}
+
+
+	</style>
+	<script></script>
+</head>
+<body>
+	<header>&nbsp;</header>
+	<div class="main_container">
+		<div class="upper_block">
+			<div class="left_block">&nbsp;</div>
+				<div class="middle_block">
+					<div class="clicker_block">
+						<div id="zombie_block"><span>ZOMBIES!!</span></div>
+						<div id="stronghold_block"><span>Stronghold</span></div>
+						<div id="lockdown"><button>LockDown!</button></div>
+						<div class="action_buttons">
+							<div id="forage"> <button>Forage</button> </div>
+							<div id="fight"> <button>Fight</button> </div>
+							<div id="fortify"> <button>Fortify</button> </div>
+						</div>
+					</div>
+				</div>
+			<div class="right_block">&nbsp;</div>
+		</div>
+	</div>
+</body>
+</html>

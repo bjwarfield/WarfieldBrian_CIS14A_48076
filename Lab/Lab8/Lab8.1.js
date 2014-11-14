@@ -1,6 +1,6 @@
 	/*
 	Brian Warfield
-	CIS 12 PHP
+	CIS 14A Javascript
 	05 Nov 2014
 	Purpose: Lab Codecademy JavaScript Lesson 15: Introduction to Objects II
 	*/
