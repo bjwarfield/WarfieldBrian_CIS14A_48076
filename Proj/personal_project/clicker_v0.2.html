@@ -4,76 +4,64 @@
 	<meta charset="UTF-8">
 	<title>ZombieClicker</title>
 	<link rel="stylesheet" type="text/css" href="reset.css">
-	<style>
-
-	div, header{
-		border: 1px solid grey;
-	}
-	header, .main_container{
-		display: table;
-		width: 960px;
-		position: relative;
-		text-align: center;
-		margin:auto;
-		padding: 0;
-	}
-	.upper_block{
-		display: table-row;
-	}
-	.left_block, .middle_block, .right_block{
-		width: 32%;
-		display: table-cell;
-		position: relative;
-	}
-	.clicker_block{
-		position: relative;
-		width: 100%;
-		border-collapse: collapse;
-		margin:0 auto;
-
-	}
-	.clicker_block > div{
-		height: 30px;
-	}
-	.clicker_block > div span{
-		vertical-align: middle;
-	}
-	.clicker_block button{
-		width: 100%;
-		height: 100%;
-	}
-	.action_buttons{
-		display: table;
-		width: 100%;
-		
-	}
-	.action_buttons div{
-		display: table-cell;
-		height: 60px;
-	}
-
-
-	</style>
-	<script></script>
+	<link rel="stylesheet" type="text/css" href="zombie_styles.css">
+	<script type="text/javascript" src="zombieClicker.js"></script>
 </head>
 <body>
 	<header>&nbsp;</header>
-	<div class="main_container">
-		<div class="upper_block">
-			<div class="left_block">&nbsp;</div>
-				<div class="middle_block">
-					<div class="clicker_block">
-						<div id="zombie_block"><span>ZOMBIES!!</span></div>
-						<div id="stronghold_block"><span>Stronghold</span></div>
-						<div id="lockdown"><button>LockDown!</button></div>
-						<div class="action_buttons">
-							<div id="forage"> <button>Forage</button> </div>
-							<div id="fight"> <button>Fight</button> </div>
-							<div id="fortify"> <button>Fortify</button> </div>
+	<div class="main_container table">
+		<div class="upper_block row">
+			<div class="left_block cell">
+				<div class="resources table">
+					<h1>Basic Resources</h1>
+					<div class="food row"><span class="cell">Food Rations:</span><span class="value cell">0</span><span class="cell rate">&nbsp;</span></div>
+					<div class="maxfood row"><span class="cell">Food Max:</span><span class="cell">200</span></div>
+					<div class="lumber row"><span class="cell">Scrap Lumber:</span><span class="value cell">0</span><span class="cell rate">&nbsp;</span></div>
+					<div class="maxlumber row"><span class="cell">Lumber Max:</span><span class="cell">200</span></div>
+					<div class="tools row"><span class="cell">Improvised Tools:</span><span class="value cell">0</span><span class="cell rate">&nbsp;</span></div>
+					<div class="maxtools row"><span class="cell">Tools Max:</span><span class="cell">200</span></div>
+					<h1>Special Resources</h1>
+					<div class="firstaid row"><span class="cell">First Aid:</span><span class="value cell">0</span></div>
+					<div class="metal row"><span class="cell">Scrap Metal:</span><span class="value cell">0</span></div>
+					<div class="munitions row"><span class="cell">Munitions:</span><span class="value cell">0</span></div>
+				</div>
+			</div>
+				<div class="middle_block cell">
+					<div class="main_front table">
+						<div id="zombie_block" class="row"><span class="cell">ZOMBIES!!:</span><span id="num_zombies" class="cell">0</span></div>
+						<div id="stronghold_block" class="row"><span  class="cell">Stronghold:</span><span id="stronghold_strength"  class="cell">0</span></div>
+					</div>
+					<div id="lockdown" class="table" ><button onclick="start()">Start</button></div>
+					<div class="clicker_block table">
+						<div class="action_buttons row">
+							<div id="forage" class="cell"> <button onmousedown="find()">Forage</button> </div>
+							<div id="fight"  class="cell"> <button onmousedown="kill()">Fight</button> </div>
+							<div id="fortify" class="cell"> <button onmousedown="build()">Fortify</button> </div>
 						</div>
 					</div>
 				</div>
-			<div class="right_block">&nbsp;</div>
+			<div class="right_block cell">
+				<div class="calender row">
+					<div class="time cell">
+						<div class="clock row">
+							<span id="days" class="cell">0</span>
+							<span id="hours" class="cell">0</span>
+							<span id="minutes" class="cell">0</span>
+						</div>
+						<div class="clockLabels row">
+							<span class="cell">Days</span>
+							<span class="cell">Hours</span>
+							<span class="cell">Minutes</span>
+						</div>
+					</div>
+					<div id="daytracker" class="cell">Day</div>
+				</div>
+				<div class="population_stats table">
+					<h1>Population</h1>
+					<div class="population row"><span class="cell">Current Populaton:</span><span class="cell">&nbsp;</span></div>
+					<div class="max_population row"><span class="cell">Max Population:</span><span class="cell">&nbsp;</span></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>

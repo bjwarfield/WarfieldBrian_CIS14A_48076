@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JavaScript Tabs</title>
+	<style type="text/css">
+	.container{
+		width:600px;
+		height: 500px;
+		margin: 0 auto;
+		display: block;
+		border: 1px solid black;
+	}
+	.tabs{
+		height:100px;
+		display:table;
+	}
+	.tab1, .tab2, .tab3{
+		display: table-cell;
+		width: 198px;
+		height: 98px;
+		border-top:1px solid grey ;
+		border-right:1px solid grey ;
+		border-bottom:1px solid transparent;
+		border-left:1px solid grey ;
+	}
+	.tab1{
+		background-color: red;
+	}
+	.tab2{
+		background-color: green;
+	}
+	.tab3{
+		background-color: blue;
+	}
+	.pages{
+		height:400px;
+		display:table;
+	}
+	.page1, .page2, .page3{
+		
+		width: 600px;
+		height: 400px;
+	}
+	.page1{
+		background-color: red;
+		display: table-cell;
+	}
+	.page2{
+		background-color: green;
+		display: none;
+	}
+	.page3{
+		background-color: blue;
+		display: none;
+	}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="tabs">
+			<div class="tab1"></div>
+			<div class="tab2"></div>
+			<div class="tab3"></div>
+		</div>
+		<div class="pages">
+			<div class="page1"></div>
+			<div class="page2"></div>
+			<div class="page3"></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	var redTab = document.getElementsByClassName("tab1")[0];
+	var greenTab = document.getElementsByClassName("tab2")[0];
+	var blueTab = document.getElementsByClassName("tab3")[0];
+	var redPage = document.getElementsByClassName("page1")[0];
+	var greenPage = document.getElementsByClassName("page2")[0];
+	var bluePage = document.getElementsByClassName("page3")[0];
+
+	redTab.onclick = function(){redPage.style.display = "table-cell";greenPage.style.display = "none";bluePage.style.display = "none";};
+	greenTab.onclick = function(){redPage.style.display = "none";greenPage.style.display = "table-cell";bluePage.style.display = "none";};
+	blueTab.onclick = function(){redPage.style.display = "none";greenPage.style.display = "none";bluePage.style.display = "table-cell";};
+	</script>
+</body>
+</html>

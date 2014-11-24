@@ -1,0 +1,123 @@
+/*General Styles*/
+body{
+	font-family: sans-serif;
+}
+div, header{
+	border: 1px solid grey;
+}
+header, .main_container{
+	display: table;
+	width: 960px;
+	position: relative;
+	text-align: center;
+	margin:auto;
+	padding: 0;
+
+}
+header{
+	height: 200px;
+}
+h1{
+	font-weight: bold;
+	font-size: 115%;
+}
+.table{
+	display: table;
+	border-collapse: collapse;
+}
+.row{
+	display: table-row;
+}
+.cell{
+	display: table-cell;
+}
+
+.left_block, .middle_block, .right_block{
+	width: 32%;
+	position: relative;
+}
+
+/*Resources */
+.resources{
+	width: 100%;
+	text-align: left;
+
+}
+.maxfood >span , .maxlumber >span , .maxtools >span {
+	color: grey;
+	padding-bottom: 8px;
+}
+
+.resources > div > span{
+	min-width: 40px;
+	max-width: 100px;
+	height:1em;
+	line-height: 1.2;
+	padding-left: 6px; 
+	vertical-align: middle;
+}
+
+.resources h1{
+	margin-top: 4px;
+}
+
+/*Clicker Block*/
+.clicker_block{
+	width: 100%;
+}
+.main_front{
+	width: 100%;
+}
+#zombie_block span, #stronghold_block span{
+	width: 50%;
+	padding: 5px 0;
+}
+
+.clicker_block button{
+	width: 100%;
+	height: 100%;
+}
+#lockdown{
+	width: 100%;
+	position: relative;
+}
+#lockdown button{
+	width: 100%;
+	height: 3em;
+}
+.action_buttons{
+	width: 100%;
+	
+}
+.action_buttons div{
+	height: 60px;
+}
+
+/*Time Block*/
+.calender {
+	width: 100%;
+}
+.time, #daytracker{
+	width: 49%;
+
+}
+#daytracker{
+	vertical-align: middle;
+}
+.clock, .clockLabels{
+}
+.clock span, .clockLabels span{
+	padding:4px;
+}
+
+/*Population*/
+.population_stats{
+	width: 100%;
+	text-align: left;
+
+}
+.population_stats span{
+	width:49%;
+	padding-left: 8px;
+	
+}
