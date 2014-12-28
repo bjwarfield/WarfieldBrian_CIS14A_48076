@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ZombieClicker</title>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="zombie_styles.css">
+	<script type="text/javascript" src="zombieClicker.js"></script>
+</head>
+<body>
+
+	<div class="content_wrapper">
+		<div id="overlay">
+			<div>
+				<h1>Everyone has Died</h1>
+				<span></span>
+				<a href="#"><h1>Login To Save Score</h1></a>
+				<button id="end_button" onclick="overlay()" >Ok</button>
+			</div>
+		</div>
+		<header>&nbsp;</header>
+		<div class="controls">
+			<button id="start_button" onclick="start()">Start!</button>
+		</div>
+		<div class="game_container">
+			<div class="upper_block row">
+				<div class="left_block cell">
+					<div class="resources table">
+						<h1>Basic Resources</h1>
+						<div class="food row">
+							<span class="cell">Food Rations:</span>
+							<span class="food_count cell">0</span>
+							<span class="cell rate">&nbsp;</span>
+						</div>
+						<div class="maxfood row">
+							<span class="cell">Food Max:</span>
+							<span class="maxfood_count cell">200</span>
+						</div>
+						<div class="lumber row">
+							<span class="cell">Scrap Lumber:</span>
+							<span class="lumber_count cell">0</span>
+							<span class="cell rate">&nbsp;</span>
+						</div>
+						<div class="maxlumber row">
+							<span class="cell">Lumber Max:</span>
+							<span class="maxlumber_count cell">200</span>
+						</div>
+						<div class="tools row">
+							<span class="cell">Improvised Tools:</span>
+							<span class="tools_count cell">0</span>
+							<span class="cell rate">&nbsp;</span>
+						</div>
+						<div class="maxtools row">
+							<span class="cell">Tools Max:</span>
+							<span class="maxtools_count cell">200</span>
+						</div>
+						<h1>Special Resources</h1>
+						<div class="firstaid row">
+							<span class="cell">First Aid:</span>
+							<span class="firstaid_count cell">0</span>
+						</div>
+						<div class="metal row">
+							<span class="cell">Scrap Metal:</span>
+							<span class="metal_count cell">0</span>
+						</div>
+						<div class="munitions row">
+							<span class="cell">Munitions:</span>
+							<span class="munitions_count cell">0</span>
+						</div>
+					</div>
+					<div class="actions table">
+						<div class="action_tabs row">&nbsp;</div>
+						<div id="buildings" class="buildings table">
+							<h1>Buildings</h1>
+							<div class="leanto row">
+								<span class="cell"><button name="leanto" class="build_1" type="button" disabled="disabled" onMousedown="createBuilding(leanto, 1)" >Leanto</button><button name="leanto_10" class="build_10" type="button" disabled="disabled" onMousedown="createBuilding(leanto, 10)" >x10</button><button name="leanto_100" class="build_100" type="button" disabled="disabled" onMousedown="createBuilding(leanto, 100)" >x100</button></span>
+								<span class="cell buildtally">&nbsp;</span>
+
+							</div>
+							<div class="buildingtip row">
+								<span class="cell">5 Lumber: MaxPop +1</span>
+							</div>
+							<div class="campsite row" style="display:none">
+								<span class="cell"><button name="campsite" class="build_1" type="button" disabled="disabled" onMousedown="createBuilding(campsite, 1)" >Capmsite</button><button name="campsite_10" class="build_10" type="button" disabled="disabled" onMousedown="createBuilding(campsite, 10)" s>x10</button><button name="campsite_100" class="build_100" type="button" disabled="disabled" onMousedown="createBuilding(campsite, 100)" s>x100</button></span>
+								<span class="cell buildtally">&nbsp;</span>
+
+							</div>
+							<div class="buildingtip row" style="display:none">
+								<span class="cell">20 Lumber, 5 Metal: MaxPop +5</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="middle_block cell">
+					<div class="main_front table">
+						<div id="zombie_block" class="row">
+							<span class="cell">ZOMBIES!!:</span>
+							<span id="num_zombies" class="cell">0</span>
+						</div>
+						<div id="stronghold_block" class="row">
+							<span  class="cell">Stronghold:</span>
+							<span id="stronghold_strength"  class="cell">0</span>
+						</div>
+					</div>
+					<div id="lockdown" class="table" >
+						<button  id="lockdown_button" onclick="lockdown()" disabled>Lockdown!!!</button>
+					</div>
+					<div class="clicker_block table">
+						<div class="action_buttons row">
+							<div id="forage" class="cell">
+								<button id="forage_button" onmousedown="find()" disabled>Forage</button>
+							</div>
+							<div id="fight"  class="cell">
+								<button id="fight_button" onmousedown="kill()" disabled>Fight</button>
+							</div>
+							<div id="fortify" class="cell">
+								<button id="fortify_button" onmousedown="build()" disabled>Fortify</button>
+							</div>
+						</div>
+					</div>
+					<div id="eventlog" class="table">
+						<h1>Event Log</h1>
+						<div id="log0" class="row">
+							<div id="logT" class="cell"></div>
+							<div id="logL" class="cell"></div>
+							<div id="logR" class="cell"></div>
+						</div>
+						<div id="log1" class="row"></div>
+						<div id="log2" class="row"></div>
+						<div id="log3" class="row"></div>
+						<div id="log4" class="row"></div>
+						<div id="log5" class="row"></div>
+						<div id="log6" class="row"></div>
+						<div id="log7" class="row"></div>
+						<div id="log8" class="row"></div>
+						<div id="log9" class="row"></div>
+					</div>
+				</div>
+				<div class="right_block cell">
+					<div class="calender row">
+						<div class="time cell">
+							<div class="clock row">
+								<span id="days" class="cell">0</span>
+								<span id="hours" class="cell">0</span>
+								<span id="minutes" class="cell">0</span>
+							</div>
+							<div class="clockLabels row">
+								<span class="cell">Days</span>
+								<span class="cell">Hours</span>
+								<span class="cell">Minutes</span>
+							</div>
+						</div>
+						<div id="daytracker" class="cell">Day</div>
+					</div>
+					<div class="population table">
+						<h1>Population</h1>
+						<div class="pop row">
+							<span class="cell">Current Populaton:</span>
+							<span class="pop_count cell">0</span>
+						</div>
+						<div class="maxpop row">
+							<span class="cell">Max Population:</span>
+							<span class="maxpop_count cell">0</span>
+						</div>
+					</div>
+					<div id="rescueFugees" class="table">
+						<div id="rescue1" class="row">
+							<button id="r1button" class="cell" onmousedown="rescue(1)" disabled>Rescue Refugee</button>
+							<span class="cost">
+								<span id="fugeeCost">10</span>
+								food
+							</span>
+						</div>
+						<div id="rescue10" class="row" style="display:none">
+							<button id="r10button" class="cell" onmousedown="rescue(10)" disabled>Rescue 10 Refugees</button>
+							<span class="cost">
+								<span id="fugeeCost">100</span>
+								food
+							</span>
+						</div>
+						<div id="rescue100" class="row" style="display:none">
+							<button id="r100button" class="cell" onmousedown="rescue(100)" disabled>Rescue 100 Refugee</button>
+							<span class="cost">
+								<span id="fugeeCost">1000</span>
+								food
+							</span>
+						</div>
+					</div>
+					<div id="jobs" class="table">
+						<h1>Jobs</h1>
+						<div id="unemployed" class="row">
+							<span class="cell">Unemployed:</span>
+							<span class="count cell">0</span>
+						</div>
+						<div id="foragers" class="row">
+							<span class="label cell">
+								<span class="row">Foragers:</span>
+								<span class="count row">0</span>
+							</span>
+							<div class="enc1 cell">
+								<button class="up row" onmousedown="hire('forager',10)">+1</button>
+								<button class="dn row" onmousedown="fire('forager',10)">-1</button>
+							</div>
+							<div class="enc10 cell">
+								<button class="up row" onmousedown="hire('forager',100)">+10</button>
+								<button class="dn row" onmousedown="fire('forager',100)">-10</button>
+							</div>
+							<div class="enc100 cell">
+								<button class="up row" onmousedown="hire('forager',1)">+100</button>
+								<button class="dn row" onmousedown="fire('forager',1)">-100</button>
+							</div>
+							<div class="encall cell">
+								<button class="up row" onmousedown="hireall('forager')">MAX</button>
+								<button class="dn row" onmousedown="fireall('forager')">MIN</button>
+							</div>
+						</div>
+						<div id="fighters" class="row">
+							<span class="label cell">
+								<span class="row">Fighters:</span>
+								<span class="count row">0</span>
+							</span>
+							<div class="enc1 cell">
+								<button class="up row" onmousedown="hire('fighter',1)">+1</button>
+								<button class="dn row" onmousedown="fire('fighter',10)">-1</button>
+							</div>
+							<div class="enc10 cell">
+								<button class="up row" onmousedown="hire('fighter',10)">+10</button>
+								<button class="dn row" onmousedown="fire('fighter',100)">-10</button>
+							</div>
+							<div class="enc100 cell">
+								<button class="up row" onmousedown="hire('fighter',100)">+100</button>
+								<button class="dn row" onmousedown="fire('fighter',1)">-100</button>
+							</div>
+							<div class="encall cell">
+								<button class="up row" onmousedown="hireall('fighter')">MAX</button>
+								<button class="dn row" onmousedown="fireall('fighter')">MIN</button>
+							</div>
+						</div>
+						<div id="fortifiers" class="row">
+							<span class="label cell">
+								<span class="row">Fortifiers:</span>
+								<span class="count row">0</span>
+							</span>
+							<div class="enc1 cell">
+								<button class="up row" onmousedown="hire('fortifier',1)">+1</button>
+								<button class="dn row" onmousedown="fire('fortifier',10)">-1</button>
+							</div>
+							<div class="enc10 cell">
+								<button class="up row" onmousedown="hire('fortifier',10)">+10</button>
+								<button class="dn row" onmousedown="fire('fortifier',100)">-10</button>
+							</div>
+							<div class="enc100 cell">
+								<button class="up row" onmousedown="hire('fortifier',100)">+100</button>
+								<button class="dn row" onmousedown="fire('fortifier',1)">-100</button>
+							</div>
+							<div class="encall cell">
+								<button class="up row" onmousedown="hireall('fortifier')">MAX</button>
+								<button class="dn row" onmousedown="fireall('fortifier')">MIN</button>
+							</div>
+						</div>
+						<div id="medics" class="row" style="display:none">
+							<span class="label cell">
+								<span class="row">Medics:</span>
+								<span class="count row">0</span>
+							</span>
+							<div class="enc1 cell">
+								<button class="up row" onmousedown="hire('medic',1)">+1</button>
+								<button class="dn row" onmousedown="fire('medic',10)">-1</button>
+							</div>
+							<div class="enc10 cell">
+								<button class="up row" onmousedown="hire('medic',10)">+10</button>
+								<button class="dn row" onmousedown="fire('medic',100)">-10</button>
+							</div>
+							<div class="enc100 cell">
+								<button class="up row" onmousedown="hire('medic',100)">+100</button>
+								<button class="dn row" onmousedown="fire('medic',1)">-100</button>
+							</div>
+							<div class="encall cell">
+								<button class="up row" onmousedown="hireall('medic')">MAX</button>
+								<button class="dn row" onmousedown="fireall('medic')">MIN</button>
+							</div>
+						</div>
+						<div id="mechanics" class="row" style="display:none">
+							<span class="label cell">
+								<span class="row">Mechanics:</span>
+								<span class="count row">0</span>
+							</span>
+							<div class="enc1 cell">
+								<button class="up row" onmousedown="hire('mechanic',1)">+1</button>
+								<button class="dn row" onmousedown="fire('mechanic',10)">-1</button>
+							</div>
+							<div class="enc10 cell">
+								<button class="up row" onmousedown="hire('mechanic',10)">+10</button>
+								<button class="dn row" onmousedown="fire('mechanic',100)">-10</button>
+							</div>
+							<div class="enc100 cell">
+								<button class="up row" onmousedown="hire('mechanic',100)">+100</button>
+								<button class="dn row" onmousedown="fire('mechanic',1)">-100</button>
+							</div>
+							<div class="encall cell">
+								<button class="up row" onmousedown="hireall('mechanic')">MAX</button>
+								<button class="dn row" onmousedown="fireall('mechanic')">MIN</button>
+							</div>
+						</div>
+						<div id="militants" class="row" style="display:none">
+							<span class="label cell">
+								<span class="row">Militants:</span>
+								<span class="count row">0</span>
+							</span>
+							<div class="enc1 cell">
+								<button class="up row" onmousedown="hire('militant',1)">+1</button>
+								<button class="dn row" onmousedown="fire('militant',10)">-1</button>
+							</div>
+							<div class="enc10 cell">
+								<button class="up row" onmousedown="hire('militant',10)">+10</button>
+								<button class="dn row" onmousedown="fire('militant',100)">-10</button>
+							</div>
+							<div class="enc100 cell">
+								<button class="up row" onmousedown="hire('militant',100)">+100</button>
+								<button class="dn row" onmousedown="fire('militant',1)">-100</button>
+							</div>
+							<div class="encall cell">
+								<button class="up row" onmousedown="hireall('militant')">MAX</button>
+								<button class="dn row" onmousedown="fireall('militant')">MIN</button>
+							</div>
+						</div>
+					</div>
+					<div class="stats table">
+						<h1>Stats</h1>
+						<div class="rclicks row">
+							<span class="cell">Resource Clicks:</span>
+							<span class="rclicks_count cell">0</span>
+						</div>
+						<div class="aclicks row">
+							<span class="cell">Action Clicks:</span>
+							<span class="aclicks_count cell">0</span>
+						</div>
+						<div class="zkills row">
+							<span class="cell">Zombies Killed:</span>
+							<span class="zkills_count cell">0</span>
+						</div>
+						<div class="buildstats row">
+							<span class="cell">Structures made:</span>
+							<span class="buildings_count cell">0</span>
+						</div>
+						<div class="territory row">
+							<span class="cell">Current Territory:</span>
+							<span class="territory_count cell">0</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

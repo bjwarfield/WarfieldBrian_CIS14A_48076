@@ -1,0 +1,188 @@
+/*General Styles*/
+body{
+	font-family: sans-serif;
+}
+div, header{
+	border: 1px solid grey;
+}
+.content_wrapper{
+	position: relative;
+}
+header, .game_container, .controls{
+	display: table;
+	width: 960px;
+	position: relative;
+	text-align: center;
+	margin:auto;
+	padding: 0;
+
+}
+header{
+	height: 200px;
+}
+h1{
+	font-weight: bold;
+	font-size: 115%;
+}
+.table{
+	display: table;
+	border-collapse: collapse;
+	width:100%;
+}
+.row{
+	display: table-row;
+}
+.cell{
+	display: table-cell;
+}
+
+.left_block, .middle_block, .right_block{
+	width: 32%;
+	position: relative;
+}
+button{
+	background: linear-gradient(to bottom, rgba(248,248,248,1) 0%,rgba(203,203,203,1) 49%,rgba(175,175,175,1) 51%,rgba(247,247,247,1) 100%);
+	color: black;
+}
+button:hover{
+	background: linear-gradient(to bottom, rgba(244,252,244,1) 0%,rgba(173,236,170,1) 49%,rgba(130,226,124,1) 51%,rgba(242,252,242,1) 100%);
+	color: #030;
+}
+button:active{
+	background: linear-gradient(to bottom, rgba(255,243,244,1) 0%,rgba(255,171,184,1) 49%,rgba(255,127,148,1) 51%,rgba(255,243,244,1) 100%);
+	color:#300;
+}
+button:disabled{
+	background: linear-gradient(to bottom, rgba(253,253,253,1) 0%,rgba(243,243,243,1) 49%,rgba(236,236,236,1) 51%,rgba(253,253,253,1) 100%);
+	color: #ccc;
+}
+/*Resources */
+.resources{
+	width: 100%;
+	text-align: left;
+
+}
+.maxfood >span , .maxlumber >span , .maxtools >span {
+	color: #999;
+}
+
+.resources > div > span{
+	min-width: 40px;
+	max-width: 100px;
+	height:1em;
+	line-height: 1.2;
+	padding-left: 6px; 
+	vertical-align: middle;
+}
+
+.resources h1{
+	margin-top: 4px;
+}
+/*Buildings*/
+.buildings{
+	text-align: left;
+}
+.buildings .build_1{
+	width: 100px;
+}
+.buildings .build_10, .buildings .build_100{
+	width: 40px;
+}
+.buildingtip{
+	color: #999;
+}
+.buildings .build_tally{
+	text-align: right;
+}
+/*Clicker Block*/
+.clicker_block{
+	width: 100%;
+}
+.main_front{
+	width: 100%;
+}
+#zombie_block span, #stronghold_block span{
+	width: 50%;
+	padding: 5px 0;
+}
+
+.clicker_block button{
+	width: 100%;
+	height: 100%;
+}
+#lockdown{
+	width: 100%;
+	position: relative;
+}
+#lockdown button{
+	width: 100%;
+	height: 3em;
+}
+.action_buttons{
+	width: 100%;
+	
+}
+.action_buttons div{
+	height: 60px;
+}
+
+/*Time Block*/
+.calender {
+	width: 100%;
+}
+.time, #daytracker{
+	width: 49%;
+
+}
+#daytracker{
+	vertical-align: middle;
+}
+.clock, .clockLabels{
+}
+.clock span, .clockLabels span{
+	padding:4px;
+}
+
+/*Population*/
+.population, .stats, #rescueFugees, #jobs{
+	text-align: left;
+	position: relative;
+}
+.population_stats span{
+	width:49%;
+	padding-left: 8px;
+	
+}
+/*Jobs*/
+#jobs button{
+	width:100%;
+}
+#jobs .label{
+	width:auto;
+}
+
+#jobs .enc1, #jobs .enc10, #jobs .enc100, #jobs .encall  {
+	width: 40px;
+}
+
+/*Overlay*/
+#overlay {
+     visibility: hidden;
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+     background: rgba(0,0,0,.25)
+}
+#overlay div {
+     width:600px;
+     height: 300px;
+     margin: 200px auto;
+     background-color: #fff;
+     border:1px solid #000;
+     padding:15px;
+     text-align:center;
+}
